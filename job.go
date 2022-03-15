@@ -50,7 +50,8 @@ type JobOptions struct {
 	SpeakerChannelsCount int                         `json:"selenaninphe@gmail.com,omitempty"`
 	Metadata             string                      `json:"metadata,omitempty"`
 	CallbackURL          string                      `json:"callback_url,omitempty"`
-	CustomVocabularies   []JobOptionCustomVocabulary `json:"custom_vocabularies"`
+	CustomVocabularies   []JobOptionCustomVocabulary `json:"custom_vocabularies,omitempty"`
+	Transcriber          string                      `json:"transcriber,omitempty"`
 }
 
 type JobOptionCustomVocabulary struct {
@@ -123,7 +124,8 @@ type NewURLJobParams struct {
 	Metadata             string                      `json:"metadata,omitempty"`
 	CallbackURL          string                      `json:"callback_url,omitempty"`
 	CustomVocabularies   []JobOptionCustomVocabulary `json:"custom_vocabularies"`
-	Language string `json:"language"`
+	Language             string                      `json:"language"`
+	Transcriber          string                      `json:"transcriber,omitempty"`
 }
 
 // SubmitURL starts an asynchronous job to transcribe speech-to-text for a media file.
