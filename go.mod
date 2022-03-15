@@ -1,4 +1,4 @@
-module github.com/nicolasgere/revai-go
+module github.com/descriptinc/revai-go
 
 go 1.14
 

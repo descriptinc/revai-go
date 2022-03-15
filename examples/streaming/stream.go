@@ -9,7 +9,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/oriiolabs/revai-go"
+	"github.com/descriptinc/revai-go"
 )
 
 func main() {

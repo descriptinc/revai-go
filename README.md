@@ -1,6 +1,6 @@
 # Go Rev.ai 
-[![Go Report Card](https://goreportcard.com/badge/github.com/oriiolabs/revai-go)](https://goreportcard.com/report/github.com/oriiolabs/revai-go)
-[![GoDoc](http://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/oriiolabs/revai-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/descriptinc/revai-go)](https://goreportcard.com/report/github.com/descriptinc/revai-go)
+[![GoDoc](http://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/descriptinc/revai-go)
 
 A [Rev.ai](https://rev.ai) Go client library.
 
@@ -9,20 +9,20 @@ A [Rev.ai](https://rev.ai) Go client library.
 Install revai-go with:
 
 ```sh
-go get -u github.com/oriiolabs/revai-go
+go get -u github.com/descriptinc/revai-go
 ```
 
 Then, import it using:
 
 ``` go
 import (
-    "github.com/oriiolabs/revai-go"
+    "github.com/descriptinc/revai-go"
 )
 ```
 
 ## Documentation
 
-For details on all the functionality in this library, see the [GoDoc](http://godoc.org/github.com/oriiolabs/revai-go)
+For details on all the functionality in this library, see the [GoDoc](http://godoc.org/github.com/descriptinc/revai-go)
 documentation.
 
 Below are a few simple examples:
