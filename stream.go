@@ -2,6 +2,7 @@ package revai
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -134,21 +135,15 @@ func (c *Conn) Write(r io.Reader) error {
 
 // Recv get messages back from rev
 func (c *Conn) Recv() (*StreamMessage, error) {
-	// we are setting the state to done in a previous call to this function so it is thread safe without the lock.
-	if c.state == StateDone {
-		return nil, io.EOF
-	}
 	select {
 	case err := <-c.err:
+		if e, ok := err.(*websocket.CloseError); ok {
+			if e.Code == 1000 {
+				return nil, io.EOF
+			}
+		}
 		return nil, err
 	case msg := <-c.msg:
-		if msg.Type == "final" {
-			c.stateLock.Lock()
-			if c.state == StateDoneSent {
-				c.state = StateDone
-			}
-			c.stateLock.Unlock()
-		}
 		return &msg, nil
 	}
 }
@@ -163,10 +158,8 @@ func (c *Conn) WriteDone() error {
 	return c.conn.WriteMessage(websocket.TextMessage, []byte("EOS"))
 }
 
-// Close closes the message chan and the websocket connection
+// Close closes the websocket connection
 func (c *Conn) Close() error {
-	close(c.msg)
-
 	return c.conn.Close()
 }
 
@@ -217,21 +210,51 @@ func (s *StreamService) Dial(ctx context.Context, params *DialStreamParams) (*Co
 
 	go func() {
 		defer conn.Close()
+		// close msg channel as we wont be writing any more
+		defer close(conn.err)
+		defer close(conn.msg)
+		defer func() {
+			if r := recover(); r != nil {
+				switch x := r.(type) {
+				case error:
+					conn.err <- x
+				case string:
+					conn.err <- errors.New(x)
+				default:
+					conn.err <- errors.New("unknown panic")
+				}
+			}
+		}()
+		previousErrorString := ""
+		previousErrorMatchCount := 0
+
 		for {
 			var msg StreamMessage
 			if err := conn.conn.ReadJSON(&msg); err != nil {
 				if e, ok := err.(*websocket.CloseError); ok {
 					if isRevError, revError := IsRevError(e.Code); isRevError {
 						conn.err <- revError
-						return
+					} else {
+						conn.err <- e
 					}
+					// if we recieve any CloseError the connection is closed and needs to be reestablished before reading can continue
+					return
 				}
 
-				if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-					// perhaps an error should be sent on Err here too
+				// ReadJson either returns either a json decode error or it will return the error again and again
+				// eventually leading to a panic. if we get the same error repeatedly report and finish.
+				if err.Error() == previousErrorString {
+					previousErrorMatchCount += 1
+				} else {
+					previousErrorMatchCount = 0
+				}
+				if previousErrorMatchCount > 5 {
 					conn.err <- err
 					return
 				}
+				previousErrorString = err.Error()
+
+				// silently drop read error.
 				continue
 			}
 			conn.msg <- msg
