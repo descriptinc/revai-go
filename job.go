@@ -52,6 +52,7 @@ type JobOptions struct {
 	CallbackURL          string                      `json:"callback_url,omitempty"`
 	CustomVocabularies   []JobOptionCustomVocabulary `json:"custom_vocabularies,omitempty"`
 	Transcriber          string                      `json:"transcriber,omitempty"`
+	CustomVocabularyId   string                      `json:"custom_vocabulary_id,omitempty"`
 }
 
 type JobOptionCustomVocabulary struct {
