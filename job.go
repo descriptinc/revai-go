@@ -127,6 +127,7 @@ type NewURLJobParams struct {
 	CustomVocabularies   []JobOptionCustomVocabulary `json:"custom_vocabularies"`
 	Language             string                      `json:"language"`
 	Transcriber          string                      `json:"transcriber,omitempty"`
+	CustomVocabularyId   string                      `json:"custom_vocabulary_id,omitempty"`
 }
 
 // SubmitURL starts an asynchronous job to transcribe speech-to-text for a media file.
