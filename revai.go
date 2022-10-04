@@ -115,7 +115,6 @@ func (c *Client) newRequest(method string, path string, body interface{}) (*http
 		}
 	}()
 
-	u := c.BaseURL.ResolveReference(rel)
 	if method == http.MethodGet {
 		v, err := query.Values(body)
 		if err != nil {
@@ -123,12 +122,9 @@ func (c *Client) newRequest(method string, path string, body interface{}) (*http
 		}
 
 		rel.RawQuery = v.Encode()
-
-		// TODO @Sylvie to revert. Temporary hack for rev ai dns switch.
-		// https://linear.app/descript/issue/BCK-2593/switch-rev-endpoint-to-prevent-dns-downtime.
-		newBaseUrl, _ := url.Parse("https://uw2.api.rev.ai")
-		u = newBaseUrl.ResolveReference(rel)
 	}
+
+	u := c.BaseURL.ResolveReference(rel)
 
 	req, err := http.NewRequest(method, u.String(), pr)
 	if err != nil {
