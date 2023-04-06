@@ -55,6 +55,7 @@ type JobOptions struct {
 	CustomVocabularyId   string                      `json:"custom_vocabulary_id,omitempty"`
 	ForcedAlignment      bool                        `json:"forced_alignment,omitempty"`
 	RemoveAtmospherics   bool                        `json:"remove_atmospherics,omitempty"`
+	ApplyDurationPadding bool                        `json:"apply_duration_padding,omitempty"`
 }
 
 type JobOptionCustomVocabulary struct {
@@ -132,6 +133,7 @@ type NewURLJobParams struct {
 	CustomVocabularyId   string                      `json:"custom_vocabulary_id,omitempty"`
 	ForcedAlignment      bool                        `json:"forced_alignment,omitempty"`
 	RemoveAtmospherics   bool                        `json:"remove_atmospherics,omitempty"`
+	ApplyDurationPadding bool                        `json:"apply_duration_padding,omitempty"`
 }
 
 // SubmitURL starts an asynchronous job to transcribe speech-to-text for a media file.
