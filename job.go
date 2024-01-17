@@ -16,7 +16,7 @@ import (
 // in the Rev.ai API.
 type JobService service
 
-// Job represents a rev.ai asycn job.
+// Job represents a rev.ai async job.
 type Job struct {
 	ID              string    `json:"id"`
 	CreatedOn       time.Time `json:"created_on"`
@@ -56,6 +56,7 @@ type JobOptions struct {
 	ForcedAlignment      bool                        `json:"forced_alignment,omitempty"`
 	RemoveAtmospherics   bool                        `json:"remove_atmospherics,omitempty"`
 	ApplyDurationPadding bool                        `json:"apply_duration_padding,omitempty"`
+	EnableFusion         bool                        `json:"enable_fusion,omitempty"`
 }
 
 type JobOptionCustomVocabulary struct {
@@ -134,6 +135,7 @@ type NewURLJobParams struct {
 	ForcedAlignment      bool                        `json:"forced_alignment,omitempty"`
 	RemoveAtmospherics   bool                        `json:"remove_atmospherics,omitempty"`
 	ApplyDurationPadding bool                        `json:"apply_duration_padding,omitempty"`
+	EnableFusion         bool                        `json:"enable_fusion,omitempty"`
 }
 
 // SubmitURL starts an asynchronous job to transcribe speech-to-text for a media file.
