@@ -18,18 +18,20 @@ type JobService service
 
 // Job represents a rev.ai async job.
 type Job struct {
-	ID              string    `json:"id"`
-	CreatedOn       time.Time `json:"created_on"`
-	Name            string    `json:"name"`
-	Status          string    `json:"status"`
-	Type            string    `json:"type"`
-	Metadata        string    `json:"metadata,omitempty"`
-	CompletedOn     time.Time `json:"completed_on,omitempty"`
-	CallbackURL     string    `json:"callback_url,omitempty"`
-	DurationSeconds float32   `json:"duration_seconds,omitempty"`
-	MediaURL        string    `json:"media_url,omitempty"`
-	Failure         string    `json:"failure,omitempty"`
-	FailureDetail   string    `json:"failure_detail,omitempty"`
+	ID               string    `json:"id"`
+	CreatedOn        time.Time `json:"created_on"`
+	Name             string    `json:"name"`
+	Status           string    `json:"status"`
+	Type             string    `json:"type"`
+	Metadata         string    `json:"metadata,omitempty"`
+	CompletedOn      time.Time `json:"completed_on,omitempty"`
+	CallbackURL      string    `json:"callback_url,omitempty"`
+	DurationSeconds  float32   `json:"duration_seconds,omitempty"`
+	MediaURL         string    `json:"media_url,omitempty"`
+	Failure          string    `json:"failure,omitempty"`
+	FailureDetail    string    `json:"failure_detail,omitempty"`
+	Language         string    `json:"language,omitempty"`
+	DetectedLanguage string    `json:"detected_language,omitempty"`
 }
 
 // NewFileJobParams specifies the parameters to the
